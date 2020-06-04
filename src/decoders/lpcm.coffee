@@ -8,6 +8,9 @@ class LPCMDecoder extends Decoder
         littleEndian = @format.littleEndian
         chunkSize = Math.min(4096, stream.remainingBytes())
         samples = chunkSize / (@format.bitsPerChannel / 8) | 0
+        if samples % @format.channelsPerFrame != 0
+            floor = Math.floor(samples / @format.channelsPerFrame);
+            samples = (floor + 1) * @format.channelsPerFrame;
         
         if chunkSize < @format.bitsPerChannel / 8
             return null
@@ -30,9 +33,9 @@ class LPCMDecoder extends Decoder
         else
             switch @format.bitsPerChannel
                 when 8
-                    output = new Int8Array(samples)
+                    output = new Uint8Array(samples)
                     for i in [0...samples] by 1
-                        output[i] = stream.readInt8()
+                        output[i] = stream.readUInt8()
                 
                 when 16
                     output = new Int16Array(samples)

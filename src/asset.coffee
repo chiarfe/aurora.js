@@ -131,8 +131,12 @@ class Asset extends EventEmitter
             div = Math.pow(2, @format.bitsPerChannel - 1)
             @decoder.on 'data', (buffer) =>
                 buf = new Float32Array(buffer.length)
-                for sample, i in buffer
-                    buf[i] = sample / div
+                if @format.bitsPerChannel == 8
+                    for sample, i in buffer
+                        buf[i] = (sample - div) / div
+                else
+                    for sample, i in buffer
+                        buf[i] = sample / div
                     
                 @emit 'data', buf
             
