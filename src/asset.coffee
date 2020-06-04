@@ -9,6 +9,7 @@
 EventEmitter = require './core/events'
 HTTPSource   = require './sources/node/http'
 FileSource   = require './sources/node/file'
+StreamSource = require './sources/node/stream'
 BufferSource = require './sources/buffer'
 Demuxer      = require './demuxer'
 Decoder      = require './decoder'
@@ -39,6 +40,9 @@ class Asset extends EventEmitter
         
     @fromBuffer: (buffer) ->
         return new Asset new BufferSource(buffer)
+        
+    @fromStream: (stream, size) ->
+        return new Asset new StreamSource(stream, size)
         
     start: (decode) ->
         return if @active

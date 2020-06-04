@@ -56,6 +56,9 @@ class Player extends EventEmitter
     @fromBuffer: (buffer) ->
         return new Player Asset.fromBuffer(buffer)
         
+    @fromStream: (stream, size) ->
+        return new Player Asset.fromStream(stream, size)
+        
     preload: ->
         return unless @asset
         

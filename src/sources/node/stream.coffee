@@ -42,4 +42,4 @@ class StreamSource extends EventEmitter
     pause: ->
         @stream.pause()
         
-module.exports = FileSource
+module.exports = StreamSource
